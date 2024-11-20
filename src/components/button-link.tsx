@@ -1,4 +1,12 @@
-export default function ButtonLink({ label = "Offene Aufgaben", href = "/" }) {
+type ButtonLinkProps = {
+  label?: string;
+  href?: string;
+};
+
+export default function ButtonLink({
+  label = "Offene Aufgaben",
+  href = "/",
+}: Readonly<ButtonLinkProps>) {
   return (
     <a
       href={href}

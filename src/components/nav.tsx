@@ -1,4 +1,10 @@
+import { useContext } from "react";
+import { TodosContext } from "../context/todo.context";
+
 export default function Nav() {
+  const { todos } = useContext(TodosContext);
+  const hasSelection = todos?.some((todo) => todo.selected);
+
   return (
     <div className="sticky bottom-0 w-full pt-5">
       <div className="mx-auto w-full">
@@ -19,11 +25,11 @@ export default function Nav() {
               <button
                 className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-blue-700 text-white disabled:bg-blue-500"
                 aria-label="Check"
+                disabled={!hasSelection}
               >
                 <i className="fas fa-check"></i>
               </button>
             </div>
-
             <div className="group flex-1">
               <a
                 href="{base}/abgeschlossen"
