@@ -20,7 +20,7 @@ export const CreateTodo = () => {
     { name: "title", placeholder: "Titel eingeben", type: "text" },
     {
       name: "description",
-      placeholder: "Beschreibung hinzufügen ",
+      placeholder: "Beschreibung hinzufügen",
       type: "text",
     },
   ];

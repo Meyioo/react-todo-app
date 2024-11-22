@@ -1,16 +1,16 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import { TodoProvider } from "./store/TodoContext";
 
 import "./index.css";
 import { Layout } from "./layout/Layout";
-import { Home } from "./pages/Home";
 import { Completed } from "./pages/Completed";
 import { CreateTodo } from "./pages/CreateTodo";
+import { Home } from "./pages/Home";
 
 function App() {
   return (
     <TodoProvider>
-      <Router>
+      <HashRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
@@ -18,7 +18,7 @@ function App() {
             <Route path="todo-anlegen" element={<CreateTodo />} />
           </Route>
         </Routes>
-      </Router>
+      </HashRouter>
     </TodoProvider>
   );
 }
