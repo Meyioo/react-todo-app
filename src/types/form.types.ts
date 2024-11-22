@@ -25,8 +25,8 @@ export type FormInputType =
   | "select"
   | "textarea";
 
-export type FormField = {
-  name: string;
+export type FormField<T> = {
+  name: T;
   placeholder: string;
   type: FormInputType;
 };

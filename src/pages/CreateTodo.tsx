@@ -16,7 +16,7 @@ export const CreateTodo = () => {
     selected: false,
   });
 
-  const fields: FormField[] = [
+  const fields: FormField<keyof Todo>[] = [
     { name: "title", placeholder: "Titel eingeben", type: "text" },
     {
       name: "description",
@@ -55,7 +55,7 @@ export const CreateTodo = () => {
                     name={field.name}
                     className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                     placeholder={field.placeholder}
-                    value={todo[field.name as keyof Todo] || ""}
+                    value={todo[field.name] as string}
                     onChange={handleInputChange}
                   />
                 </div>
