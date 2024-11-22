@@ -1,8 +1,8 @@
 import React from "react";
-import { TodoListProps } from "../types/props.types";
-import { TodoItem } from "./TodoItem";
-import { Todo } from "../types/todo.types";
 import { useTodoStore } from "../store/hooks/useTodoStore";
+import { TodoListProps } from "../types/props.types";
+import { Todo } from "../types/todo.types";
+import { TodoItem } from "./TodoItem";
 
 export const TodoList: React.FC<TodoListProps> = ({ completed = false }) => {
   const { todos, searchTerm } = useTodoStore();

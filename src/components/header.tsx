@@ -1,7 +1,7 @@
 import React from "react";
 import { HeaderProps } from "../types/props.types";
 import { ButtonLink } from "./ButtonLink";
-import { SearchBar } from "./SearchBar";
+import { SearchBar } from "./Searchbar";
 
 export const Header: React.FC<HeaderProps> = ({
   title,
