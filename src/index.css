@@ -1,6 +1,12 @@
-@import url(https://pro.fontawesome.com/releases/v5.10.0/css/all.css);
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;800&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  input:not([type="checkbox"]) {
+    @apply w-full p-3 m-2;
+  }
+  input:not([type="checkbox"]):focus {
+    @apply outline-none ring-2 ring-blue-500;
+  }
+}

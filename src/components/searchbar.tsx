@@ -1,6 +1,11 @@
-export default function Searchbar() {
+import React from "react";
+import { useTodoStore } from "../store/hooks/useTodoStore";
+
+export const SearchBar: React.FC = () => {
+  const { searchTerm, setSearchTerm } = useTodoStore();
+
   return (
-    <div className="relative mx-3 mb-3">
+    <div className="relative mx-3  mb-3">
       <label htmlFor="search" className="sr-only">
         Neue Aufgabe hinzufügen
       </label>
@@ -9,13 +14,14 @@ export default function Searchbar() {
         type="text"
         id="search"
         placeholder="Suche nach..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
         className="w-full rounded-md border-gray-200 py-2.5 pe-10 shadow-sm sm:text-sm"
       />
 
       <span className="absolute inset-y-0 end-0 grid w-10 place-content-center">
         <button type="button" className="text-gray-600 hover:text-gray-700">
           <span className="sr-only">Search</span>
-
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -34,4 +40,4 @@ export default function Searchbar() {
       </span>
     </div>
   );
-}
+};
