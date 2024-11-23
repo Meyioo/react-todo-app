@@ -1,11 +1,11 @@
+import { FaCheck, FaClipboard, FaList } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { useTodoStore } from "../store/hooks/useTodoStore";
-import { FaCheck, FaClipboard, FaList } from "react-icons/fa";
 
 export const Nav = () => {
   const location = useLocation();
   const { todos, closeSelectedTodos } = useTodoStore();
-  const hasSelectedTodos = todos.open.some((todo) => todo.selected);
+  const hasSelectedTodos = todos.some((todo) => todo.selected);
 
   return (
     <div className="sticky bottom-0 w-full pt-5">

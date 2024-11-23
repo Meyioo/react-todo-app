@@ -8,7 +8,7 @@ export const TodoList: React.FC<TodoListProps> = ({ completed = false }) => {
   const { todos, searchTerm } = useTodoStore();
 
   const filteredTodos = React.useMemo(() => {
-    const todoList = completed ? todos.completed : todos.open;
+    const todoList = todos.filter((todo) => todo.completed === completed);
     if (searchTerm.length === 0) return todoList;
 
     return todoList.filter(

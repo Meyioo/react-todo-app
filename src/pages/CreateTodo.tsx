@@ -10,6 +10,7 @@ export const CreateTodo = () => {
   const navigate = useNavigate();
   const { addTodo } = useTodoStore();
   const [todo, setTodo] = useState<Todo>({
+    id: null,
     title: "",
     description: "",
     completed: false,

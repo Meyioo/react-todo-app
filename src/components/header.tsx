@@ -1,6 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { HeaderProps } from "../types/props.types";
-import { ButtonLink } from "./ButtonLink";
 import { SearchBar } from "./Searchbar";
 
 export const Header: React.FC<HeaderProps> = ({
@@ -16,7 +16,14 @@ export const Header: React.FC<HeaderProps> = ({
           </h1>
         </div>
         <div className="flex items-center gap-4">
-          <ButtonLink href="/todo-anlegen" label="Neu" />
+          <Link to="todo-anlegen">
+            <button
+              className="inline-block w-full rounded-lg bg-blue-700 px-5 py-3 text-sm font-medium text-white"
+              type="button"
+            >
+              Neu
+            </button>
+          </Link>
         </div>
       </div>
     </div>
