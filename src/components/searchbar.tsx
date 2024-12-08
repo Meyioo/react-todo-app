@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTodoStore } from '../store/hooks/useTodoStore';
 
 export const SearchBar: React.FC = () => {
-	const { searchTerm, setSearchTerm } = useTodoStore();
+	const {
+		searchTerm,
+		setSearchTerm,
+		sortBySelected,
+		sortByPriority,
+		sortByCreateDate,
+		sortByDueDate
+	} = useTodoStore();
+
+	const [dropdownVisible, setDropdownVisible] = useState(false);
+
+	const toggleDropdown = () => {
+		setDropdownVisible(!dropdownVisible);
+	};
 
 	return (
 		<form className="flex items-center mx-3 gap-2">
@@ -37,8 +50,11 @@ export const SearchBar: React.FC = () => {
 				/>
 			</div>
 			<button
-				type="submit"
+				id="dropdownDefaultButton"
+				data-dropdown-toggle="dropdown"
 				className="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
+				type="button"
+				onClick={toggleDropdown}
 			>
 				<svg
 					className="w-5 h-5 text-white"
@@ -56,8 +72,51 @@ export const SearchBar: React.FC = () => {
 						d="M18.796 4H5.204a1 1 0 0 0-.753 1.659l5.302 6.058a1 1 0 0 1 .247.659v4.874a.5.5 0 0 0 .2.4l3 2.25a.5.5 0 0 0 .8-.4v-7.124a1 1 0 0 1 .247-.659l5.302-6.059c.566-.646.106-1.658-.753-1.658Z"
 					/>
 				</svg>
-				<span className="sr-only">Search</span>
 			</button>
+			<div
+				id="dropdown"
+				style={{ position: 'absolute', top: '160px', right: 0 }}
+				className={`z-10 ${dropdownVisible ? 'block' : 'hidden'} bg-white divide-y divide-gray-100 rounded-lg shadow w-44`}
+			>
+				<ul className="py-2 text-sm text-gray-700" aria-labelledby="dropdownDefaultButton">
+					<li>
+						<button
+							type="button"
+							className="block px-4 py-2 hover:bg-gray-100"
+							onClick={sortByPriority}
+						>
+							Priorität
+						</button>
+					</li>
+					<li>
+						<button
+							type="button"
+							className="block px-4 py-2 hover:bg-gray-100"
+							onClick={sortByDueDate}
+						>
+							Fälligkeitsdatum
+						</button>
+					</li>
+					<li>
+						<button
+							type="button"
+							className="block px-4 py-2 hover:bg-gray-100"
+							onClick={sortByCreateDate}
+						>
+							Erstellungsdatum
+						</button>
+					</li>
+					<li>
+						<button
+							type="button"
+							className="block px-4 py-2 hover:bg-gray-100"
+							onClick={sortBySelected}
+						>
+							Auswahl
+						</button>
+					</li>
+				</ul>
+			</div>
 		</form>
 	);
 };
