@@ -7,11 +7,11 @@ interface PriorityProps {
 }
 
 const Priority = ({ initialPriority, onValueChange }: PriorityProps) => {
-	const [priority] = useState(initialPriority);
+	const [priority, setPriority] = useState(initialPriority);
 
 	const handleChange = (level: PriorityLevel) => {
-		console.log(level);
-		onValueChange(level); // Übergibt den Wert an die Parent-Komponente
+		setPriority(level);
+		onValueChange(level);
 	};
 
 	return (

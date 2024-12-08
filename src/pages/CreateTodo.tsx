@@ -1,15 +1,15 @@
 import { Button, Datepicker, Label, TextInput } from 'flowbite-react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import Priority from '../components/Priority';
 import { PriorityLevel } from '../constants/priority.constants';
+import { useToast } from '../store/hooks/useToastStore';
 import { useTodoStore } from '../store/hooks/useTodoStore';
 import { ITodo } from '../types/todo.types';
 
 export const CreateTodo = () => {
-	const navigate = useNavigate();
 	const { addTodo } = useTodoStore();
+	const { showToast } = useToast();
 	const [todo, setTodo] = useState<ITodo>({
 		id: null,
 		title: '',
@@ -49,13 +49,17 @@ export const CreateTodo = () => {
 
 	const handleSubmit = () => {
 		addTodo(todo);
+		showToast({
+			message: 'Aufgabe wurde erfolgreich angelegt',
+			color: 'bg-green-500',
+			duration: 3000
+		});
 	};
 
 	return (
 		<div>
 			<Header title="Aufgabe anlegen" />
 			<div className="container mx-auto">
-				{todo.priority}
 				<div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
 					<form className="flex max-w-md flex-col gap-4">
 						<div>
@@ -104,7 +108,13 @@ export const CreateTodo = () => {
 							</div>
 							<Priority initialPriority={PriorityLevel.Low} onValueChange={handlePriorityChange} />
 						</div>
-						<Button type="submit" onClick={handleSubmit}>
+						<Button
+							color="blue"
+							className="disabled:bg-blue-500"
+							type="button"
+							onClick={handleSubmit}
+							disabled={!todo.title || !todo.description || !todo.dueDate || !todo.priority}
+						>
 							Submit
 						</Button>
 					</form>
