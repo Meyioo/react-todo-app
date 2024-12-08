@@ -39,8 +39,6 @@ export const CreateTodo = () => {
 	};
 
 	const handlePriorityChange = (priority: PriorityLevel) => {
-		console.log(priority);
-
 		setTodo((prev) => ({
 			...prev,
 			priority
@@ -115,7 +113,7 @@ export const CreateTodo = () => {
 							onClick={handleSubmit}
 							disabled={!todo.title || !todo.description || !todo.dueDate || !todo.priority}
 						>
-							Submit
+							Aufgabe anlegen
 						</Button>
 					</form>
 				</div>

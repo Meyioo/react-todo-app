@@ -13,7 +13,7 @@ export const Header: React.FC<HeaderProps> = ({ title, showSearch = false }) => 
 					<div>
 						<h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">{title}</h1>
 					</div>
-					{getSelectedCount() > 0 && (
+					{title === 'Offene Aufgaben' && getSelectedCount() > 0 && (
 						<div>
 							<button
 								className="text-center bg-blue-700 font-medium focus-within:ring-4 focus-within:outline-none inline-flex items-center justify-center px-3 py-2 text-xs text-white bg-primary-700 hover:bg-primary-800 rounded-lg"
