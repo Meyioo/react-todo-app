@@ -13,6 +13,8 @@ interface TodoContextType {
 	sortBySelected: () => void;
 	sortByCreateDate: () => void;
 	sortByPriority: () => void;
+	getSelectedCount: () => number;
+	completeSelectedTodos: () => void;
 }
 
 export const TodoContext = createContext<TodoContextType | undefined>(undefined);
@@ -45,6 +47,10 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({ children
 		});
 	};
 
+	const completeSelectedTodos = () => {
+		setTodos((prev) => prev.map((todo) => (todo.selected ? { ...todo, completed: true } : todo)));
+	};
+
 	const selectTodo = (todo: ITodo) => {
 		setTodos((prev) => prev.map((t) => (t.id === todo.id ? { ...t, selected: !t.selected } : t)));
 	};
@@ -54,6 +60,8 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({ children
 			prev.map((todo) => (todo.selected ? { ...todo, completed: true, selected: false } : todo))
 		);
 	};
+
+	const getSelectedCount = () => todos.filter((todo) => todo.selected).length;
 
 	let selectedAscendingOrder = true;
 
@@ -109,6 +117,24 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({ children
 		});
 	};
 
+	let priorityAscendingOrder = true;
+
+	const sortByPriority = () => {
+		setTodos((prev) => {
+			const sortedTodos = [...prev].sort((a, b) => {
+				let comparison: number;
+				if (a.selected === b.selected) {
+					comparison = 0;
+				} else {
+					comparison = a.selected ? -1 : 1;
+				}
+				return selectedAscendingOrder ? comparison : -comparison;
+			});
+			selectedAscendingOrder = !selectedAscendingOrder;
+			return sortedTodos;
+		});
+	};
+
 	const value = {
 		todos,
 		searchTerm,
@@ -119,7 +145,10 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({ children
 		closeSelectedTodos,
 		sortBySelected,
 		sortByCreateDate,
-		sortByDueDate
+		sortByDueDate,
+		sortByPriority,
+		getSelectedCount,
+		completeSelectedTodos
 	};
 
 	return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>;
