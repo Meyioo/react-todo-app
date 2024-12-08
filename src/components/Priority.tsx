@@ -1,11 +1,17 @@
 import { useState } from 'react';
-import { Priorities } from '../constants/priority.constants';
+import { Priorities, PriorityLevel } from '../constants/priority.constants';
 
-const Priority = ({ initialPriority }) => {
-	const [priority, setPriority] = useState(initialPriority);
+interface PriorityProps {
+	initialPriority: PriorityLevel;
+	onValueChange: (value: PriorityLevel) => void;
+}
 
-	const selectPriority = (p) => {
-		setPriority(p);
+const Priority = ({ initialPriority, onValueChange }: PriorityProps) => {
+	const [priority] = useState(initialPriority);
+
+	const handleChange = (level: PriorityLevel) => {
+		console.log(level);
+		onValueChange(level); // Übergibt den Wert an die Parent-Komponente
 	};
 
 	return (
@@ -15,7 +21,7 @@ const Priority = ({ initialPriority }) => {
 					key={level}
 					type="button"
 					className={`center relative me-3 inline-block select-none whitespace-nowrap rounded-lg px-3.5 py-2 font-sans text-xs font-bold uppercase leading-none text-white last-of-type:me-0 ${color} ${priority === level ? activeColor : ''}`}
-					onClick={() => selectPriority(level)}
+					onClick={() => handleChange(level)}
 				>
 					<div className="mt-px">{label}</div>
 				</button>

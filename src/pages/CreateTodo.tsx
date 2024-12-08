@@ -38,6 +38,15 @@ export const CreateTodo = () => {
 		}));
 	};
 
+	const handlePriorityChange = (priority: PriorityLevel) => {
+		console.log(priority);
+
+		setTodo((prev) => ({
+			...prev,
+			priority
+		}));
+	};
+
 	const handleSubmit = () => {
 		addTodo(todo);
 	};
@@ -46,7 +55,7 @@ export const CreateTodo = () => {
 		<div>
 			<Header title="Aufgabe anlegen" />
 			<div className="container mx-auto">
-				{todo.dueDate.toDateString()}
+				{todo.priority}
 				<div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
 					<form className="flex max-w-md flex-col gap-4">
 						<div>
@@ -93,7 +102,7 @@ export const CreateTodo = () => {
 							<div className="mb-2 block">
 								<Label htmlFor="priority" value="Priorität" />
 							</div>
-							<Priority initialPriority={PriorityLevel.Low} />
+							<Priority initialPriority={PriorityLevel.Low} onValueChange={handlePriorityChange} />
 						</div>
 						<Button type="submit" onClick={handleSubmit}>
 							Submit
