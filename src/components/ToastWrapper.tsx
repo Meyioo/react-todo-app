@@ -7,5 +7,11 @@ export const ToastWrapper: React.FC = () => {
 	const { currentToast } = useToast();
 
 	if (!currentToast) return null;
-	return <Toast className="bg-green-500 text-white shadow-lg">{currentToast.message}</Toast>;
+	return (
+		<div className="sticky mx-auto bottom-0 mt-auto">
+			<Toast className="rounded-md text-sm text-white shadow-lg bg-green-500 me-3">
+				{currentToast.message}
+			</Toast>
+		</div>
+	);
 };

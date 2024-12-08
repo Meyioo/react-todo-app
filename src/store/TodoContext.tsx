@@ -7,7 +7,6 @@ interface TodoContextType {
 	searchTerm: string;
 	setSearchTerm: (term: string) => void;
 	addTodo: (todo: ITodo) => void;
-	toggleTodoCompletion: (index: number) => void;
 	selectTodo: (todo: ITodo) => void;
 	sortByDueDate: () => void;
 	sortBySelected: () => void;
@@ -40,25 +39,14 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({ children
 		]);
 	};
 
-	const toggleTodoCompletion = (index: number) => {
-		setTodos((prev) => {
-			prev[index].completed = !prev[index].completed;
-			return { ...prev };
-		});
-	};
-
 	const completeSelectedTodos = () => {
-		setTodos((prev) => prev.map((todo) => (todo.selected ? { ...todo, completed: true } : todo)));
+		setTodos((prev) =>
+			prev.map((todo) => (todo.selected ? { ...todo, completed: true, selected: false } : todo))
+		);
 	};
 
 	const selectTodo = (todo: ITodo) => {
 		setTodos((prev) => prev.map((t) => (t.id === todo.id ? { ...t, selected: !t.selected } : t)));
-	};
-
-	const closeSelectedTodos = () => {
-		setTodos((prev) =>
-			prev.map((todo) => (todo.selected ? { ...todo, completed: true, selected: false } : todo))
-		);
 	};
 
 	const getSelectedCount = () => todos.filter((todo) => todo.selected).length;
@@ -140,9 +128,7 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({ children
 		searchTerm,
 		setSearchTerm,
 		addTodo,
-		toggleTodoCompletion,
 		selectTodo,
-		closeSelectedTodos,
 		sortBySelected,
 		sortByCreateDate,
 		sortByDueDate,

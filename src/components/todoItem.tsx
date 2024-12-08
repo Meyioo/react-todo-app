@@ -7,7 +7,11 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo }) => {
 	const { selectTodo } = useTodoStore();
 
 	return (
-		<button className="w-full border-b-2 p-2 text-left" onClick={() => selectTodo(todo)}>
+		<button
+			className="w-full border-b-2 p-2 text-left"
+			onClick={() => selectTodo(todo)}
+			disabled={todo.completed}
+		>
 			<div className="flex">
 				{!todo.completed && (
 					<div className="me-4 ms-2 flex items-center">
