@@ -24,6 +24,10 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({ children
 		return stored ? JSON.parse(stored) : DefaultTodos;
 	});
 	const [searchTerm, setSearchTerm] = useState('');
+	let selectedAscendingOrder = true;
+	let dueDateAscendingOrder = true;
+	let createDateAscendingOrder = true;
+	let priorityAscendingOrder = true;
 
 	useEffect(() => {
 		localStorage.setItem('todos', JSON.stringify(todos));
@@ -51,8 +55,6 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 	const getSelectedCount = () => todos.filter((todo) => todo.selected).length;
 
-	let selectedAscendingOrder = true;
-
 	const sortBySelected = () => {
 		setTodos((prev) => {
 			const sortedTodos = [...prev].sort((a, b) => {
@@ -69,56 +71,38 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({ children
 		});
 	};
 
-	let dueDateAscendingOrder = true;
-
 	const sortByDueDate = () => {
 		setTodos((prev) => {
 			const sortedTodos = [...prev].sort((a, b) => {
-				let comparison: number;
-				if (a.selected === b.selected) {
-					comparison = 0;
-				} else {
-					comparison = a.selected ? -1 : 1;
-				}
-				return selectedAscendingOrder ? comparison : -comparison;
+				const dateA = new Date(a.dueDate).getTime();
+				const dateB = new Date(b.dueDate).getTime();
+				return dueDateAscendingOrder ? dateA - dateB : dateB - dateA;
 			});
-			selectedAscendingOrder = !selectedAscendingOrder;
+			dueDateAscendingOrder = !dueDateAscendingOrder;
 			return sortedTodos;
 		});
 	};
-
-	let createDateAscendingOrder = true;
 
 	const sortByCreateDate = () => {
 		setTodos((prev) => {
 			const sortedTodos = [...prev].sort((a, b) => {
-				let comparison: number;
-				if (a.selected === b.selected) {
-					comparison = 0;
-				} else {
-					comparison = a.selected ? -1 : 1;
-				}
-				return selectedAscendingOrder ? comparison : -comparison;
+				const dateA = new Date(a.createDate).getTime();
+				const dateB = new Date(b.createDate).getTime();
+				return createDateAscendingOrder ? dateA - dateB : dateB - dateA;
 			});
-			selectedAscendingOrder = !selectedAscendingOrder;
+			createDateAscendingOrder = !createDateAscendingOrder;
 			return sortedTodos;
 		});
 	};
 
-	let priorityAscendingOrder = true;
-
 	const sortByPriority = () => {
-		setTodos((prev) => {
-			const sortedTodos = [...prev].sort((a, b) => {
-				let comparison: number;
-				if (a.selected === b.selected) {
-					comparison = 0;
-				} else {
-					comparison = a.selected ? -1 : 1;
-				}
-				return selectedAscendingOrder ? comparison : -comparison;
+		const priorityOrder = { low: 1, medium: 2, high: 3 };
+		setTodos((todos) => {
+			const sortedTodos = [...todos].sort((a, b) => {
+				const comparison = priorityOrder[a.priority] - priorityOrder[b.priority];
+				return priorityAscendingOrder ? comparison : -comparison;
 			});
-			selectedAscendingOrder = !selectedAscendingOrder;
+			priorityAscendingOrder = !priorityAscendingOrder;
 			return sortedTodos;
 		});
 	};
