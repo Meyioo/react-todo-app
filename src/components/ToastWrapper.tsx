@@ -1,6 +1,3 @@
-'use client';
-
-import { Toast } from 'flowbite-react';
 import { useToast } from '../store/hooks/useToastStore';
 
 export const ToastWrapper: React.FC = () => {
@@ -9,9 +6,12 @@ export const ToastWrapper: React.FC = () => {
 	if (!currentToast) return null;
 	return (
 		<div className="sticky mx-auto bottom-0 mt-auto">
-			<Toast className="rounded-md text-sm text-white shadow-lg bg-green-500 me-3">
-				{currentToast.message}
-			</Toast>
+			<div
+				className="rounded-md text-sm text-white shadow-lg bg-green-500 {{ toast.color }}"
+				role="alert"
+			>
+				<div className="flex p-4">{currentToast.message}</div>
+			</div>
 		</div>
 	);
 };

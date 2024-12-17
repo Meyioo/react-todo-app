@@ -2,12 +2,11 @@ import { useState } from 'react';
 import { Priorities, PriorityLevel } from '../constants/priority.constants';
 
 interface PriorityProps {
-	initialPriority: PriorityLevel;
 	onValueChange: (value: PriorityLevel) => void;
 }
 
-const Priority = ({ initialPriority, onValueChange }: PriorityProps) => {
-	const [priority, setPriority] = useState(initialPriority);
+const Priority = ({ onValueChange }: PriorityProps) => {
+	const [priority, setPriority] = useState('');
 
 	const handleChange = (level: PriorityLevel) => {
 		setPriority(level);

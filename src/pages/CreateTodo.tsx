@@ -1,4 +1,3 @@
-import { Button, Datepicker, Label, TextInput } from 'flowbite-react';
 import { useState } from 'react';
 import { Header } from '../components/Header';
 import Priority from '../components/Priority';
@@ -18,7 +17,7 @@ export const CreateTodo = () => {
 		selected: false,
 		createDate: new Date(),
 		dueDate: new Date(),
-		priority: PriorityLevel.Low
+		priority: null
 	});
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,9 +28,8 @@ export const CreateTodo = () => {
 		}));
 	};
 
-	const handleDateChange = (date: Date | null) => {
-		if (!date) return;
-
+	const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const date = new Date(e.target.value);
 		setTodo((prev) => ({
 			...prev,
 			dueDate: date
@@ -45,6 +43,10 @@ export const CreateTodo = () => {
 		}));
 	};
 
+	function isFormValid() {
+		return !todo.title || !todo.description || !todo.dueDate || !todo.priority;
+	}
+
 	const handleSubmit = () => {
 		addTodo(todo);
 		showToast({
@@ -56,68 +58,69 @@ export const CreateTodo = () => {
 
 	return (
 		<div>
-			<Header title="Aufgabe anlegen" />
-			<div className="container mx-auto">
-				<div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-					<form className="flex max-w-md flex-col gap-4">
-						<div>
-							<div className="mb-2 block">
-								<Label htmlFor="title" value="Titel" />
-							</div>
-							<TextInput
-								id="title"
-								type="text"
-								name="title"
-								placeholder="Titel eingeben"
-								value={todo.title}
-								onChange={handleInputChange}
-								required
-							/>
-						</div>
-						<div>
-							<div className="mb-2 block">
-								<Label htmlFor="description" value="Beschreibung" />
-							</div>
-							<TextInput
-								id="description"
-								type="text"
-								name="description"
-								placeholder="Beschreibung eingeben"
-								value={todo.description}
-								onChange={handleInputChange}
-								required
-							/>
-						</div>
-						<div>
-							<div className="mb-2 block">
-								<Label htmlFor="dueDate" value="Fälligkeitsdatum" />
-							</div>
-							<Datepicker
-								language="de-DE"
-								name="dueDate"
-								value={todo.dueDate}
-								onChange={handleDateChange}
-								required
-							/>
-						</div>
-						<div>
-							<div className="mb-2 block">
-								<Label htmlFor="priority" value="Priorität" />
-							</div>
-							<Priority initialPriority={PriorityLevel.Low} onValueChange={handlePriorityChange} />
-						</div>
-						<Button
-							color="blue"
-							className="disabled:bg-blue-500"
-							type="button"
-							onClick={handleSubmit}
-							disabled={!todo.title || !todo.description || !todo.dueDate || !todo.priority}
-						>
-							Aufgabe anlegen
-						</Button>
-					</form>
+			<Header title="Aufgabe anlegen"></Header>
+			<form>
+				<div className="grid mx-4 gap-6 m-6 md:grid-cols-2">
+					<div>
+						<label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900">
+							Titel
+						</label>
+						<input
+							type="text"
+							id="title"
+							name="title"
+							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+							placeholder="Titel eingeben"
+							value={todo.title}
+							onChange={handleInputChange}
+							required
+						/>
+					</div>
+					<div>
+						<label htmlFor="Beschreibung" className="block mb-2 text-sm font-medium text-gray-900">
+							Beschreibung
+						</label>
+						<input
+							type="text"
+							id="Beschreibung"
+							name="description"
+							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+							placeholder="Beschreibung eingeben"
+							value={todo.description}
+							onChange={handleInputChange}
+							required
+						/>
+					</div>
+					<div>
+						<label htmlFor="dueDate" className="block mb-2 text-sm font-medium text-gray-900">
+							Fälligkeitsdatum
+						</label>
+						<input
+							type="date"
+							id="dueDate"
+							value={todo.dueDate.toISOString().split('T')[0]}
+							onChange={handleDateChange}
+							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+							required
+						/>
+					</div>
+					<div>
+						<label htmlFor="priority" className="block mb-2 text-sm font-medium text-gray-900">
+							Priorität
+						</label>
+						<Priority onValueChange={handlePriorityChange} />
+					</div>
 				</div>
-			</div>
+
+				<button
+					type="button"
+					onClick={handleSubmit}
+					disabled={isFormValid()}
+					className="text-white disabled:bg-blue-500 bg-blue-700 mx-4 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center"
+				>
+					Aufgabe anlegen
+				</button>
+			</form>
 		</div>
 	);
 };

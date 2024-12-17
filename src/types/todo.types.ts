@@ -1,19 +1,19 @@
-import { PriorityLevel } from "../constants/priority.constants";
+import { PriorityLevel } from '../constants/priority.constants';
 
 export interface ITodo {
-  id: number | null;
-  createDate: Date;
-  title: string;
-  description: string;
-  completed: boolean;
-  selected: boolean;
-  dueDate: Date;
-  priority: PriorityLevel;
+	id: number | null;
+	createDate: Date;
+	title: string;
+	description: string;
+	completed: boolean;
+	selected: boolean;
+	dueDate: Date;
+	priority: PriorityLevel | null;
 }
 
 export type Priority = {
-  level: PriorityLevel;
-  label: string;
-  color: string;
-  activeColor: string;
+	level: PriorityLevel;
+	label: string;
+	color: string;
+	activeColor: string;
 };

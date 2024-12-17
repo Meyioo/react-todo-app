@@ -17,7 +17,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo }) => {
 					<div className="me-4 ms-2 flex items-center">
 						<input
 							type="checkbox"
-							className="size-4 rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:ring-offset-gray-900"
+							className="size-4 rounded border-gray-300"
 							id="checkbox"
 							checked={todo.selected}
 						/>
