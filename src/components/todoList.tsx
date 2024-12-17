@@ -20,8 +20,8 @@ export const TodoList: React.FC<TodoListProps> = ({ completed = false }) => {
 
 	return (
 		<main>
-			{filteredTodos.map((todo, index) => (
-				<TodoItem key={index} todo={todo} />
+			{filteredTodos.map((todo) => (
+				<TodoItem key={todo.id} todo={todo} />
 			))}
 			{filteredTodos.length === 0 && (
 				<p className="mt-3 text-center text-gray-500">Keine Aufgaben gefunden</p>

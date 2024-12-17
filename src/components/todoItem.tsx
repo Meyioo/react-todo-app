@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useTodoStore } from '../store/hooks/useTodoStore';
 import { TodoItemProps } from '../types/props.types';
 import TodoItemPriority from './TodoItemPriority';
 
 export const TodoItem: React.FC<TodoItemProps> = ({ todo }) => {
 	const { selectTodo } = useTodoStore();
+	const checkboxRef = useRef<HTMLInputElement>(null);
+
+	const handleDivClick = () => {
+		if (checkboxRef.current) {
+			checkboxRef.current.click();
+		}
+	};
 
 	return (
-		<button
-			className="w-full border-b-2 p-2 text-left"
-			onClick={() => selectTodo(todo)}
-			disabled={todo.completed}
-		>
+		<div className="w-full border-b-2 p-2 text-left" onClick={handleDivClick}>
 			<div className="flex">
 				{!todo.completed && (
 					<div className="me-4 ms-2 flex items-center">
@@ -20,6 +23,8 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo }) => {
 							className="size-4 rounded border-gray-300"
 							id="checkbox"
 							checked={todo.selected}
+							onChange={() => selectTodo(todo)}
+							ref={checkboxRef}
 						/>
 					</div>
 				)}
@@ -34,10 +39,10 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo }) => {
 					</p>
 
 					<div className="text-end">
-						<TodoItemPriority priorityLevel={todo.priority} />
+						<TodoItemPriority priorityLevel={todo.priority!} />
 					</div>
 				</div>
 			</div>
-		</button>
+		</div>
 	);
 };
