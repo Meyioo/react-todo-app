@@ -99,7 +99,7 @@ export const TodoProvider: React.FC<{ children: React.ReactNode }> = ({ children
 		const priorityOrder = { low: 1, medium: 2, high: 3 };
 		setTodos((todos) => {
 			const sortedTodos = [...todos].sort((a, b) => {
-				const comparison = priorityOrder[a.priority] - priorityOrder[b.priority];
+				const comparison = priorityOrder[a.priority!] - priorityOrder[b.priority!];
 				return priorityAscendingOrder ? comparison : -comparison;
 			});
 			priorityAscendingOrder = !priorityAscendingOrder;
